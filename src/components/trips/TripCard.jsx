@@ -1,7 +1,7 @@
 import React from 'react';
 import './TripCard.css';
 
-const TripCard = ({ trip, onLoad, onDelete }) => {
+const TripCard = ({ trip, onLoad, onDelete, onShare }) => {
   const formatDate = (timestamp) => {
     if (!timestamp) return 'Unknown';
     

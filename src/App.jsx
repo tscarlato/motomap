@@ -13,6 +13,7 @@ import RouteMetrics from './components/RouteMetrics';
 import TripActions from './components/trips/TripActions';
 import EmptyState from './components/EmptyState';
 import MyTripsView from './components/trips/MyTripsView';
+import SharedTripView from './components/shared/SharedTripView';
 import { DEFAULT_CENTER, DEFAULT_ZOOM, GOOGLE_MAPS_LIBRARIES } from './utils/mapConfig';
 import { calculateRoute } from './utils/routeCalculator';
 
