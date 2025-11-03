@@ -3,14 +3,18 @@ import { useNavigate } from 'react-router-dom';
 import { useTrips } from '../../contexts/TripContext';
 import TripCard from './TripCard';
 import DeleteConfirmModal from './DeleteConfirmModal';
+import ShareTripModal from './ShareTripModal';
+import { enableTripSharing, disableTripSharing, generateShareURL } from '../../services/shareService';
 import toast from 'react-hot-toast';
 import './MyTripsView.css';
 
 const MyTripsView = () => {
   const navigate = useNavigate();
-  const { savedTrips, loading, deleteTrip, setCurrentTripById } = useTrips();
+  const { savedTrips, loading, deleteTrip, setCurrentTripById, refreshTrips } = useTrips();
   const [tripToDelete, setTripToDelete] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [shareModalState, setShareModalState] = useState({ isOpen: false, trip: null, shareURL: null });
+  const [isTogglingShare, setIsTogglingShare] = useState(false);
 
   console.log('MyTripsView - savedTrips:', savedTrips);
   console.log('MyTripsView - loading:', loading);
@@ -41,6 +45,45 @@ const MyTripsView = () => {
       toast.error('Failed to delete trip');
     } finally {
       setIsDeleting(false);
+    }
+  };
+
+  const handleShareClick = async (trip) => {
+    console.log('Share button clicked!', trip);
+    
+    if (trip.isShared && trip.shareToken) {
+      console.log('Trip already shared, showing existing link');
+      const shareURL = generateShareURL(trip.shareToken);
+      setShareModalState({ isOpen: true, trip, shareURL });
+    } else {
+      console.log('Enabling sharing for trip:', trip.id);
+      try {
+        const shareToken = await enableTripSharing(trip.id);
+        console.log('Share token generated:', shareToken);
+        const shareURL = generateShareURL(shareToken);
+        await refreshTrips();
+        setShareModalState({ isOpen: true, trip, shareURL });
+        toast.success('Sharing enabled!');
+      } catch (error) {
+        console.error('Share error:', error);
+        toast.error('Failed to enable sharing');
+      }
+    }
+  };
+
+  const handleDisableSharing = async () => {
+    if (!shareModalState.trip) return;
+
+    setIsTogglingShare(true);
+    try {
+      await disableTripSharing(shareModalState.trip.id, shareModalState.trip.shareToken);
+      await refreshTrips();
+      toast.success('Sharing disabled');
+      setShareModalState({ isOpen: false, trip: null, shareURL: null });
+    } catch (error) {
+      toast.error('Failed to disable sharing');
+    } finally {
+      setIsTogglingShare(false);
     }
   };
 
