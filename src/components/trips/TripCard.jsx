@@ -69,6 +69,12 @@ const TripCard = ({ trip, onLoad, onDelete, onShare }) => {
           Load Trip
         </button>
         <button
+          className="trip-card-btn secondary"
+          onClick={onShare}
+        >
+          {trip.isShared ? '🔗 Shared' : '📤 Share'}
+        </button>
+        <button
           className="trip-card-btn danger"
           onClick={onDelete}
         >
