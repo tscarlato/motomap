@@ -1,4 +1,3 @@
-
 /**
  * Trip Context Provider
  * Manages saved trips and current trip state
@@ -30,19 +29,8 @@ export const TripProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Load user's trips when they log in
-  useEffect(() => {
-    if (user) {
-      loadUserTrips();
-    } else {
-      // Clear trips when user logs out
-      setSavedTrips([]);
-      setCurrentTrip(null);
-    }
-  }, [user]);
-
   // Load all trips for current user
-  const loadUserTrips = async () => {
+  const loadUserTrips = useCallback(async () => {
     if (!user) return;
 
     setLoading(true);
@@ -57,7 +45,18 @@ export const TripProvider = ({ children }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user]);
+
+  // Load user's trips when they log in
+  useEffect(() => {
+    if (user) {
+      loadUserTrips();
+    } else {
+      // Clear trips when user logs out
+      setSavedTrips([]);
+      setCurrentTrip(null);
+    }
+  }, [user, loadUserTrips]);
 
   // Save a new trip
   const saveTrip = async (tripData) => {
