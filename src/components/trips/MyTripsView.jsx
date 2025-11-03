@@ -12,6 +12,9 @@ const MyTripsView = () => {
   const [tripToDelete, setTripToDelete] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
 
+  console.log('MyTripsView - savedTrips:', savedTrips);
+  console.log('MyTripsView - loading:', loading);
+
   const handleLoadTrip = async (tripId) => {
     try {
       await setCurrentTripById(tripId);

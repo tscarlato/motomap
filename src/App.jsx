@@ -23,6 +23,8 @@ function MapView() {
     libraries: GOOGLE_MAPS_LIBRARIES
   });
 
+  const { currentTrip } = useTrips();
+
   // State management
   const [waypoints, setWaypoints] = useState([]);
   const [route, setRoute] = useState(null);
@@ -35,6 +37,31 @@ function MapView() {
     isCalculating: false,
     error: null
   });
+
+  // Load trip when currentTrip changes
+  useEffect(() => {
+    if (currentTrip && currentTrip.waypoints) {
+      console.log('Loading trip waypoints:', currentTrip.waypoints);
+      
+      // Convert trip waypoints to map waypoints
+      const waypointsFromTrip = currentTrip.waypoints.map(wp => ({
+        id: `trip-${wp.order}-${Date.now()}`,
+        position: { lat: wp.lat, lng: wp.lng },
+        address: wp.address,
+        order: wp.order
+      }));
+      
+      setWaypoints(waypointsFromTrip);
+      
+      // Apply trip settings
+      if (currentTrip.settings) {
+        setMapSettings(prev => ({
+          ...prev,
+          avoidHighways: currentTrip.settings.avoidHighways
+        }));
+      }
+    }
+  }, [currentTrip]);
 
   // Waypoint management functions
   const addWaypoint = useCallback((position, address) => {
