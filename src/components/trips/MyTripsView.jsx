@@ -89,6 +89,7 @@ const MyTripsView = () => {
                 trip={trip}
                 onLoad={() => handleLoadTrip(trip.id)}
                 onDelete={() => handleDeleteClick(trip)}
+                onShare={() => handleShareClick(trip)}
               />
             ))}
           </div>
@@ -101,6 +102,14 @@ const MyTripsView = () => {
         onConfirm={handleConfirmDelete}
         onCancel={() => setTripToDelete(null)}
         isDeleting={isDeleting}
+      />
+
+      <ShareTripModal
+        isOpen={shareModalState.isOpen}
+        onClose={() => setShareModalState({ isOpen: false, trip: null, shareURL: null })}
+        shareURL={shareModalState.shareURL}
+        onDisableSharing={handleDisableSharing}
+        isDisabling={isTogglingShare}
       />
     </>
   );
