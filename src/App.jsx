@@ -1,18 +1,22 @@
 import React, { useState, useCallback, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useJsApiLoader } from '@react-google-maps/api';
 import { Toaster } from 'react-hot-toast';
 import './App.css';
 import { AuthProvider } from './contexts/AuthContext';
+import { TripProvider } from './contexts/TripContext';
 import NavBar from './components/navigation/NavBar';
 import MapContainer from './components/MapContainer';
 import SearchBox from './components/SearchBox';
 import WaypointList from './components/WaypointList';
 import RouteMetrics from './components/RouteMetrics';
+import TripActions from './components/trips/TripActions';
 import EmptyState from './components/EmptyState';
+import MyTripsView from './components/trips/MyTripsView';
 import { DEFAULT_CENTER, DEFAULT_ZOOM, GOOGLE_MAPS_LIBRARIES } from './utils/mapConfig';
 import { calculateRoute } from './utils/routeCalculator';
 
-function AppContent() {
+function MapView() {
   // Load Google Maps API
   const { isLoaded, loadError } = useJsApiLoader({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY || '',
@@ -181,6 +185,13 @@ function AppContent() {
               isCalculating={ui.isCalculating}
             />
           )}
+
+          {/* Trip Actions - Save button */}
+          <TripActions
+            waypoints={waypoints}
+            settings={mapSettings}
+            route={route}
+          />
         </div>
       </div>
     </div>
@@ -191,17 +202,24 @@ function AppContent() {
 function App() {
   return (
     <AuthProvider>
-      <AppContent />
-      <Toaster 
-        position="top-right"
-        toastOptions={{
-          duration: 3000,
-          style: {
-            background: '#363636',
-            color: '#fff',
-          },
-        }}
-      />
+      <TripProvider>
+        <Router>
+          <Routes>
+            <Route path="/" element={<MapView />} />
+            <Route path="/trips" element={<MyTripsView />} />
+          </Routes>
+          <Toaster 
+            position="top-right"
+            toastOptions={{
+              duration: 3000,
+              style: {
+                background: '#363636',
+                color: '#fff',
+              },
+            }}
+          />
+        </Router>
+      </TripProvider>
     </AuthProvider>
   );
 }
