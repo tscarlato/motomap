@@ -235,6 +235,7 @@ function App() {
           <Routes>
             <Route path="/" element={<MapView />} />
             <Route path="/trips" element={<MyTripsView />} />
+            <Route path="/shared/:shareToken" element={<SharedTripView />} />
           </Routes>
           <Toaster 
             position="top-right"
