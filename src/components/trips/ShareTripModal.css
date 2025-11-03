@@ -1,0 +1,215 @@
+.shared-trip-view {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: #f9fafb;
+  }
+  
+  /* Loading/Error States */
+  .shared-loading,
+  .shared-error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    padding: 2rem;
+    text-align: center;
+  }
+  
+  .shared-error h2 {
+    margin: 1rem 0;
+    color: #dc2626;
+  }
+  
+  .shared-error p {
+    margin: 0 0 2rem 0;
+    color: #6b7280;
+  }
+  
+  .btn-go-home {
+    padding: 0.875rem 2rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .btn-go-home:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  }
+  
+  /* Header */
+  .shared-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .shared-header-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+  
+  .shared-trip-info {
+    flex: 1;
+  }
+  
+  .view-only-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.375rem 0.875rem;
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 6px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  
+  .shared-trip-name {
+    margin: 0 0 0.5rem 0;
+    font-size: 2rem;
+    font-weight: 700;
+  }
+  
+  .shared-trip-description {
+    margin: 0;
+    font-size: 1rem;
+    opacity: 0.9;
+    line-height: 1.6;
+  }
+  
+  .copy-to-trips-btn {
+    padding: 0.875rem 1.75rem;
+    background-color: white;
+    color: #667eea;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .copy-to-trips-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .copy-to-trips-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+  
+  /* Content */
+  .shared-content {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+  }
+  
+  .shared-panel {
+    width: 400px;
+    flex-shrink: 0;
+    background-color: white;
+    border-left: 1px solid #e5e7eb;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  
+  .shared-panel-header {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+    background-color: #f9fafb;
+  }
+  
+  .shared-panel-header h2 {
+    margin: 0;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #1f2937;
+  }
+  
+  /* Footer */
+  .shared-footer {
+    padding: 2rem 1.5rem;
+    background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+    border-top: 1px solid #e5e7eb;
+    text-align: center;
+    margin-top: auto;
+  }
+  
+  .footer-text {
+    margin: 0 0 1rem 0;
+    font-size: 0.875rem;
+    color: #6b7280;
+  }
+  
+  .btn-create-account {
+    width: 100%;
+    padding: 0.875rem 1.5rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .btn-create-account:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  }
+  
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .shared-panel {
+      width: 350px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .shared-header {
+      padding: 1.5rem;
+    }
+  
+    .shared-header-content {
+      flex-direction: column;
+    }
+  
+    .shared-trip-name {
+      font-size: 1.5rem;
+    }
+  
+    .copy-to-trips-btn {
+      width: 100%;
+    }
+  
+    .shared-content {
+      flex-direction: column;
+    }
+  
+    .shared-panel {
+      width: 100%;
+      height: 50vh;
+      border-left: none;
+      border-top: 1px solid #e5e7eb;
+    }
+  }
