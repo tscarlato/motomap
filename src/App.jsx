@@ -1,6 +1,9 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useJsApiLoader } from '@react-google-maps/api';
+import { Toaster } from 'react-hot-toast';
 import './App.css';
+import { AuthProvider } from './contexts/AuthContext';
+import NavBar from './components/navigation/NavBar';
 import MapContainer from './components/MapContainer';
 import SearchBox from './components/SearchBox';
 import WaypointList from './components/WaypointList';
@@ -9,7 +12,7 @@ import EmptyState from './components/EmptyState';
 import { DEFAULT_CENTER, DEFAULT_ZOOM, GOOGLE_MAPS_LIBRARIES } from './utils/mapConfig';
 import { calculateRoute } from './utils/routeCalculator';
 
-function App() {
+function AppContent() {
   // Load Google Maps API
   const { isLoaded, loadError } = useJsApiLoader({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY || '',
@@ -117,10 +120,7 @@ function App() {
   if (loadError) {
     return (
       <div className="app">
-        <header className="app-header">
-          <h1>🏍️ Motorcycle Trip Planner</h1>
-          <p className="subtitle">Plan your route with per-leg metrics</p>
-        </header>
+        <NavBar />
         <div className="app-error">
           <h2>⚠️ Failed to Load Google Maps</h2>
           <p>There was an error loading the Google Maps API.</p>
@@ -132,10 +132,7 @@ function App() {
 
   return (
     <div className="app">
-      <header className="app-header">
-        <h1>🏍️ Motorcycle Trip Planner</h1>
-        <p className="subtitle">Plan your route with per-leg metrics</p>
-      </header>
+      <NavBar />
 
       <div className="app-content">
         {/* Map Container */}
@@ -187,6 +184,25 @@ function App() {
         </div>
       </div>
     </div>
+  );
+}
+
+// Main App component wrapped with providers
+function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+      <Toaster 
+        position="top-right"
+        toastOptions={{
+          duration: 3000,
+          style: {
+            background: '#363636',
+            color: '#fff',
+          },
+        }}
+      />
+    </AuthProvider>
   );
 }
 
