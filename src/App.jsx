@@ -4,7 +4,7 @@ import { useJsApiLoader } from '@react-google-maps/api';
 import { Toaster } from 'react-hot-toast';
 import './App.css';
 import { AuthProvider } from './contexts/AuthContext';
-import { TripProvider } from './contexts/TripContext';
+import { TripProvider, useTrips } from './contexts/TripContext';
 import NavBar from './components/navigation/NavBar';
 import MapContainer from './components/MapContainer';
 import SearchBox from './components/SearchBox';
